@@ -1,0 +1,44 @@
+ 
+<html>
+  <head>
+    <title>som de animais</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+
+  <body>
+  <div class="container">
+  
+    <center>
+      <h1 class="btn btn-danger heading">som de animais
+      </h1>
+      <br>
+      <br>
+
+      <p style="font-size: 22px;">
+      	<br>
+        <b style="color: rgb(0, 255, 30)">reproduza som de animais, miado, latido ou rugido</b>
+      </p>
+      <button class="btn btn-primary" id="btn_som"onclick="som_animais()">estou ouvindo</button>
+      <h4 id="quantidade"></h4>
+      <br>
+      <h3 id="animal"></h3>
+      <br>
+      <img id="img_ouvido" src="data:image/png;base64,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">
+      <br>
+      <h1 class="btn btn-primary">Feito Por: Arthur S. Quintal</h1>
+    </center>
+
+  </div>
+
+<script src="main.js"></script>
+
+  </body>
+</html>
